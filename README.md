@@ -1,9 +1,18 @@
 # hands-up
 
-Rock/paper/scissors gesture recognition using an ESP32 + VL53L8CX time-of-flight
-sensor (8x8 depth grid) and a small PyTorch classifier.
+Rock/paper/scissors gesture recognition using an STM32 Nucleo + VL53L8CX
+time-of-flight sensor (8x8 depth grid) streamed over serial to a small
+PyTorch classifier.
 
-## Pipeline
+## Layout
+
+- **`esp32_firmware/`** -- Arduino sketch that reads the VL53L8CX over I2C and
+  streams one CSV line per frame (64 comma-separated distance values, mm) over
+  serial. See the header comment in `esp32_firmware.ino` for wiring and board
+  setup (STM32duino core, Nucleo-64, ST-LINK/SWD upload).
+- **`scripts/`** -- Python side: data collection, training, and live inference.
+
+## Pipeline (in `scripts/`)
 
 1. **`capture_data.py`** -- live heatmap of the sensor feed with keyboard-driven
    labeled data collection. Records frames into `gesture_dataset.json`.
@@ -32,7 +41,7 @@ sensor (8x8 depth grid) and a small PyTorch classifier.
 
 ## Setup
 
-Each script opens a serial connection to the ESP32 at 115200 baud. Edit the
+Each script opens a serial connection to the board at 115200 baud. Edit the
 `PORT` constant at the top of `capture_data.py` and `live_demo.py` to match
 your device's serial port (e.g. `/dev/tty.usbserial-XXXX` on macOS, `COM3` on
 Windows) before running.
