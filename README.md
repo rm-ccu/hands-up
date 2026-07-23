@@ -48,6 +48,12 @@ Each script opens a serial connection to the board at 115200 baud. Edit the
 your device's serial port (e.g. `/dev/tty.usbserial-XXXX` on macOS, `COM3` on
 Windows) before running.
 
+## Training log
+
+See [TRAINING_LOG.md](TRAINING_LOG.md) for terminal output from early
+data-collection/training runs, including a failed run caused by class
+imbalance.
+
 ## Gallery
 
 <table>
